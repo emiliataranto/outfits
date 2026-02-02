@@ -88,7 +88,7 @@ window.saveOutfit = function () {
 
   const grid = document.querySelector('.outfits .grid');
   grid.insertBefore(outfit, grid.querySelector('.add-card'));
-
+  
   selectedItems.forEach(i => i.classList.remove('selected'));
   selectedItems = [];
 
