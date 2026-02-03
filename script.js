@@ -18,23 +18,19 @@ let currentCategory = null;
 let selectedItems = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("JS conectado ✅");
+
   const uploadInput = document.getElementById("uploadItem");
   const addItemButtons = document.querySelectorAll(".add-card[data-category]");
   const addOutfitBtn = document.getElementById("addOutfitBtn");
 
-  // ADD ITEM
+  // ADD ITEM (celu + desktop)
   addItemButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       currentCategory = btn.dataset.category;
+      console.log("Add item:", currentCategory);
       uploadInput.click();
     });
-  });
-
-  // ADD OUTFIT
-  addOutfitBtn.addEventListener("click", () => {
-    const builder = document.getElementById("builder");
-    builder.classList.add("active");
-    builder.scrollIntoView({ behavior: "smooth" });
   });
 
   // SUBIR FOTO
@@ -50,6 +46,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     reader.readAsDataURL(file);
   });
+
+  // ADD OUTFIT
+  if (addOutfitBtn) {
+    addOutfitBtn.addEventListener("click", () => {
+      const builder = document.getElementById("builder");
+      builder.classList.add("active");
+      builder.scrollIntoView({ behavior: "smooth" });
+    });
+  }
 });
 
 

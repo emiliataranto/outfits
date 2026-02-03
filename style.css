@@ -108,32 +108,33 @@ select {
 }
 
 /* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 12px;
+.closet {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
+.category h3 {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 600;
+}
 
-/* CARDS */
-.item,
-.outfit,
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+
 .add-card {
-  background: #ffffff;
-  height: 200px;
-  border-radius: 22px;
-  border: 1px solid #e2defa;
+  height: 180px;
+  border: 2px dashed #7b6cff;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6b6b75;
-  font-size: 14px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-button, .add-card {
-  min-height: 44px;
-  border-radius: 14px;
+  color: #7b6cff;
+  font-weight: 500;
 }
 
 .item:hover,
