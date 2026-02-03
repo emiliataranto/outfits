@@ -114,10 +114,8 @@ select {
   gap: 32px;
 }
 
-.category h3 {
-  margin-bottom: 12px;
-  font-size: 18px;
-  font-weight: 600;
+.category {
+  margin-top: 40px;
 }
 
 .grid {
