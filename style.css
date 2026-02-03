@@ -199,3 +199,14 @@ select {
   font-size: 18px;
   font-weight: 600;
 }
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .add-card {
+    height: 140px;
+  }
+}
