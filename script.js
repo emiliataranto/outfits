@@ -1,7 +1,17 @@
-const closetGrid = document.querySelector('.closet .grid');
-const uploadInput = document.getElementById('uploadItem');
+let closetData = JSON.parse(localStorage.getItem("closetData")) || {
+  trousers: [],
+  shirts: [],
+  shorts: [],
+  shoes: [],
+  jackets: [],
+  sweaters: [],
+  dresses: []
+};
 
-let currentCategory = null;
+let outfitsData = JSON.parse(localStorage.getItem("outfitsData")) || [];
+
+
+const closetGrid = document.querySelector('.closet .grid');
 const uploadInput = document.getElementById('uploadItem');
 
 let currentCategory = null;
@@ -21,12 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!file || !currentCategory) return;
 
     const reader = new FileReader();
-    reader.onload = () => {
-      const item = document.createElement('div');
-      item.className = 'item';
-      item.style.backgroundImage = `url(${reader.result})`;
-      item.style.backgroundSize = 'cover';
-      item.style.backgroundPosition = 'center';
+   reader.onload = () => {
+  const imageData = reader.result;
+
+  // guardar en data
+  closetData[currentCategory].push(imageData);
+  localStorage.setItem("closetData", JSON.stringify(closetData));
+
+  renderClosetCategory(currentCategory);
+};
+
 
       item.addEventListener('click', () => {
         item.classList.toggle('selected');
@@ -41,8 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `.grid[data-category="${currentCategory}"]`
       );
 
-      grid.insertBefore(item, grid.lastElementChild);
-    };
+      grid.insertBefore(item, grid.lastElementChild); };
 
     reader.readAsDataURL(file);
   });
@@ -75,6 +88,17 @@ window.saveOutfit = function () {
   outfit.dataset.weather = weather;
   outfit.dataset.occasion = occasion;
   outfit.dataset.mood = mood;
+  
+  const outfitData = {
+  items: selectedItems.map(item => item.style.backgroundImage.slice(5, -2)),
+  weather,
+  occasion,
+  mood
+};
+
+outfitsData.push(outfitData);
+localStorage.setItem("outfitsData", JSON.stringify(outfitsData));
+
 
   outfit.style.display = 'grid';
   outfit.style.gridTemplateColumns = 'repeat(2, 1fr)';
@@ -88,7 +112,7 @@ window.saveOutfit = function () {
 
   const grid = document.querySelector('.outfits .grid');
   grid.insertBefore(outfit, grid.querySelector('.add-card'));
-  
+
   selectedItems.forEach(i => i.classList.remove('selected'));
   selectedItems = [];
 
@@ -113,4 +137,113 @@ window.saveOutfit = function () {
   });
 };
 
+}
 
+function renderClosetCategory(category) {
+  const grid = document.querySelector(`.grid[data-category="${category}"]`);
+
+  // borrar todo menos el botón add
+  grid.querySelectorAll(".item").forEach(i => i.remove());
+
+  closetData[category].forEach(img => {
+    const item = document.createElement("div");
+    item.className = "item";
+    item.style.backgroundImage = `url(${img})`;
+    item.style.backgroundSize = "cover";
+    item.style.backgroundPosition = "center";
+
+   item.addEventListener("dblclick", () => {
+  closetData[category] = closetData[category].filter(
+    img => img !== item.style.backgroundImage.slice(5, -2)
+  );
+
+  localStorage.setItem("closetData", JSON.stringify(closetData));
+  renderClosetCategory(category);
+});
+
+
+    grid.insertBefore(item, grid.lastElementChild);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  Object.keys(closetData).forEach(category => {
+    renderClosetCategory(category);
+  });
+
+  renderOutfits();
+});
+
+
+function renderOutfits() {
+  const grid = document.querySelector(".outfits .grid");
+
+  grid.querySelectorAll(".outfit").forEach(o => o.remove());
+
+  outfitsData.forEach((outfitData, index) => {
+  const outfit = document.createElement("div");
+  outfit.className = "outfit";
+  outfit.dataset.weather = outfitData.weather;
+  outfit.dataset.occasion = outfitData.occasion;
+  outfit.dataset.mood = outfitData.mood;
+
+  outfit.style.display = "grid";
+  outfit.style.gridTemplateColumns = "repeat(2, 1fr)";
+  outfit.style.gap = "6px";
+
+  outfit.addEventListener("dblclick", () => {
+    outfitsData.splice(index, 1);
+    localStorage.setItem("outfitsData", JSON.stringify(outfitsData));
+    renderOutfits();
+  });
+
+  outfitData.items.forEach(img => {
+    const item = document.createElement("div");
+    item.className = "item";
+    item.style.backgroundImage = `url(${img})`;
+    item.style.backgroundSize = "cover";
+    item.style.backgroundPosition = "center";
+    outfit.appendChild(item);
+  });
+
+  grid.insertBefore(outfit, grid.querySelector(".add-card"));
+});
+
+ 
+
+    outfitData.items.forEach(img => {
+      const item = document.createElement("div");
+      item.className = "item";
+      item.style.backgroundImage = `url(${img})`;
+      item.style.backgroundSize = "cover";
+      item.style.backgroundPosition = "center";
+      outfit.appendChild(item);
+    });
+
+    grid.insertBefore(outfit, grid.querySelector(".add-card"));
+  });
+}
+
+
+window.chooseOutfit = function () {
+  const weather = document.getElementById("filterWeather").value;
+  const occasion = document.getElementById("filterOccasion").value;
+  const mood = document.getElementById("filterMood").value;
+
+  const outfits = document.querySelectorAll(".outfit");
+
+  outfits.forEach(outfit => {
+    const matchWeather =
+      weather === "any" || outfit.dataset.weather === weather;
+    const matchOccasion =
+      occasion === "any" || outfit.dataset.occasion === occasion;
+    const matchMood =
+      mood === "any" || outfit.dataset.mood === mood;
+
+    if (matchWeather && matchOccasion && matchMood) {
+      outfit.style.display = "grid";
+    } else {
+      outfit.style.display = "none";
+    }
+  });
+};
