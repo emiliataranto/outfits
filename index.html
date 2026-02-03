@@ -66,64 +66,64 @@
   <div class="category">
     <h3>Trousers</h3>
     <div class="grid" data-category="trousers">
-      <div class="add-card" onclick="openUpload('trousers')">+ Add item</div>
+<div class="add-card" data-category="trousers>+ Add item</div>
     </div>
   </div>
 
   <div class="category">
     <h3>Shirts</h3>
     <div class="grid" data-category="shirts">
-      <div class="add-card" onclick="openUpload('shirts')">+ Add item</div>
+<div class="add-card" data-category="shirts">+ Add item</div>
     </div>
   </div>
 
   <div class="category">
     <h3>Shorts</h3>
     <div class="grid" data-category="shorts">
-      <div class="add-card" onclick="openUpload('shorts')">+ Add item</div>
+<div class="add-card" data-category="shorts">+ Add item</div>
     </div>
   </div>
 
   <div class="category">
     <h3>Shoes</h3>
     <div class="grid" data-category="shoes">
-      <div class="add-card" onclick="openUpload('shoes')">+ Add item</div>
+<div class="add-card" data-category="shoes">+ Add item</div>
     </div>
   </div>
 
   <div class="category">
     <h3>Jackets</h3>
     <div class="grid" data-category="jackets">
-      <div class="add-card" onclick="openUpload('jackets')">+ Add item</div>
+<div class="add-card" data-category="jackets">+ Add item</div>
     </div>
   </div>
 
   <div class="category">
     <h3>Sweaters</h3>
     <div class="grid" data-category="sweaters">
-      <div class="add-card" onclick="openUpload('sweaters')">+ Add item</div>
+<div class="add-card" data-category="sweaters">+ Add item</div>
     </div>
   </div>
 
   <div class="category">
     <h3>Dresses</h3>
     <div class="grid" data-category="dresses">
-      <div class="add-card" onclick="openUpload('dresses')">+ Add item</div>
+<div class="add-card" data-category="dresses">+ Add item</div>
     </div>
   </div>
 </section>
 
     <div class="category">
     <h3>Accesories</h3>
-    <div class="grid" data-category="sweaters">
-      <div class="add-card" onclick="openUpload('sweaters')">+ Add item</div>
+    <div class="grid" data-category="Accesories">
+<div class="add-card" data-category="Accesories">+ Add item</div>
     </div>
   </div>
   
     <div class="category">
     <h3>Bags</h3>
-    <div class="grid" data-category="sweaters">
-      <div class="add-card" onclick="openUpload('sweaters')">+ Add item</div>
+    <div class="grid" data-category="bags">
+<div class="add-card" data-category="bags">+ Add item</div>
     </div>
   </div>
   
@@ -134,7 +134,7 @@
      <div class="grid">
   <div class="outfit">Outfit 1</div>
   <div class="outfit">Outfit 2</div>
-   <div class="add-card" onclick="goToBuilder()">+ Add outfit</div>
+<div class="add-card" id="addOutfitBtn">+ Add outfit</div>
 </div>
   
     </section>
@@ -180,7 +180,16 @@
 
   </main>
 
-    <script src="script.js"></script>
+    <input
+  type="file"
+  id="uploadItem"
+  accept="image/*"
+  capture="environment"
+  hidden
+>
+
+ <script src="script.js"></script>
+
 </body>
 </html>
 

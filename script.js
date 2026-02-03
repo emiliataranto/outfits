@@ -17,8 +17,41 @@ const uploadInput = document.getElementById('uploadItem');
 let currentCategory = null;
 let selectedItems = [];
 
-document.addEventListener('DOMContentLoaded', () => {
-  const uploadInput = document.getElementById('uploadItem');
+document.addEventListener("DOMContentLoaded", () => {
+  const uploadInput = document.getElementById("uploadItem");
+  const addItemButtons = document.querySelectorAll(".add-card[data-category]");
+  const addOutfitBtn = document.getElementById("addOutfitBtn");
+
+  // ADD ITEM
+  addItemButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      currentCategory = btn.dataset.category;
+      uploadInput.click();
+    });
+  });
+
+  // ADD OUTFIT
+  addOutfitBtn.addEventListener("click", () => {
+    const builder = document.getElementById("builder");
+    builder.classList.add("active");
+    builder.scrollIntoView({ behavior: "smooth" });
+  });
+
+  // SUBIR FOTO
+  uploadInput.addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (!file || !currentCategory) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      closetData[currentCategory].push(reader.result);
+      localStorage.setItem("closetData", JSON.stringify(closetData));
+      renderClosetCategory(currentCategory);
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
 
   // hacemos la función global
   window.openUpload = function (category) {
